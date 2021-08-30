@@ -1,8 +1,5 @@
 package com.demo.myapps.Auth;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -11,9 +8,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.demo.myapps.Utilities.CustomProgress;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.demo.myapps.HomeApp.Home;
 import com.demo.myapps.R;
+import com.demo.myapps.Utilities.CustomProgress;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -25,13 +25,12 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     //Views
     EditText mEmail, mPassword;
     Button mLogin;
-    TextView mForgetPassword;
+    TextView mForgetPassword , mSignUp;
 
     //Firebase
     FirebaseAuth mAuth;
     private CustomProgress mCustomProgress = CustomProgress.getInstance();
     private Boolean emailAddressChecker;
-
 
 
     @Override
@@ -55,6 +54,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         //Text Views
         mForgetPassword = findViewById(R.id.login_forget_password);
         mForgetPassword.setOnClickListener(this);
+        mSignUp = findViewById(R.id.login_signup_tv);
+        mSignUp.setOnClickListener(this);
 
         //Button
         mLogin = findViewById(R.id.login_login_btn);
@@ -64,15 +65,20 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     //Click Listener Function
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.login_login_btn:
 
                 if (validate())
                     loginToTheAccount();
                 break;
 
+            case R.id.login_signup_tv:
+                startActivity(new Intent(Login.this, Signup.class));
+                finish();
+                break;
+
             case R.id.login_forget_password:
-                startActivity(new Intent(Login.this, Home.class));
+                startActivity(new Intent(Login.this, ForgetPassword.class));
                 finish();
                 break;
         }
@@ -104,18 +110,18 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         FirebaseUser firebaseUser = mAuth.getCurrentUser();
         firebaseUser.reload();
         emailAddressChecker = firebaseUser.isEmailVerified();
-            if (emailAddressChecker) {
-                mCustomProgress.hideProgress();
-                Toast.makeText(Login.this, "Welcome to MyApps", Toast.LENGTH_LONG).show();
-                Intent i = new Intent(Login.this, Home.class);
-                startActivity(i);
-                finish();
+        if (emailAddressChecker) {
+            mCustomProgress.hideProgress();
+            Toast.makeText(Login.this, "Welcome to MyApps", Toast.LENGTH_LONG).show();
+            Intent i = new Intent(Login.this, Home.class);
+            startActivity(i);
+            finish();
 
-            } else {
-                mCustomProgress.hideProgress();
-                Toast.makeText(this, "Please, confirm your account, check your email and try again.", Toast.LENGTH_LONG).show();
-                mAuth.signOut();
-            }
+        } else {
+            mCustomProgress.hideProgress();
+            Toast.makeText(this, "Please, confirm your account, check your email and try again.", Toast.LENGTH_LONG).show();
+            mAuth.signOut();
+        }
 
 
     }
