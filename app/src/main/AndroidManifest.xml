@@ -9,10 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApps">
-        <activity android:name=".Auth.ForgetPassword"></activity>
-        <activity android:name=".HomeApp.Home" >
-
-        </activity>
+        <activity android:name=".Account.UserAccountLaunch"></activity>
+        <activity android:name=".Account.UserAccountLogin" />
+        <activity android:name=".WebView.WebView" />
+        <activity android:name=".Auth.ForgetPassword" />
+        <activity android:name=".HomeApp.Home" />
         <activity android:name=".Auth.Signup" />
         <activity android:name=".Auth.Login" />
         <activity android:name=".Splash_Screen">

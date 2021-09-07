@@ -1,5 +1,7 @@
 package com.demo.myapps.DataModels;
 
+import java.util.ArrayList;
+
 public class UserDataModel {
     String UserID;
     String firstName;
@@ -8,6 +10,7 @@ public class UserDataModel {
     String phoneNumber;
     String nationalID;
     String password;
+    ArrayList<AccountDataModel> accounts;
 
     public UserDataModel(String userID, String firstName, String lastName, String email, String phoneNumber, String nationalID, String password) {
         UserID = userID;
@@ -17,6 +20,7 @@ public class UserDataModel {
         this.phoneNumber = phoneNumber;
         this.nationalID = nationalID;
         this.password = password;
+        accounts = new ArrayList<>();
     }
 
     public String getUserID() {
@@ -73,6 +77,14 @@ public class UserDataModel {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public ArrayList<AccountDataModel> getAccounts() {
+        return accounts;
+    }
+
+    public void setAccounts(ArrayList<AccountDataModel> accounts) {
+        this.accounts = accounts;
     }
 }
 

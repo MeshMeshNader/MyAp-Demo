@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Account.UserAccountLogin">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/user_account_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="53dp"
+        android:background="@color/blue">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+
+                android:id="@+id/user_account_toolbar_name"
+                android:layout_width="109dp"
+                android:layout_height="match_parent"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/et_margin_start_end"
+                android:gravity="center"
+                android:text="Facebook"
+                android:textColor="@color/white"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+
+            <ImageView
+                android:id="@+id/user_account_back_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/et_margin_start_end"
+                android:src="@drawable/ic_back" />
+
+            <ImageView
+                android:id="@+id/user_account_menu_btn"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/et_margin_start_end"
+                android:src="@drawable/ic_menu" />
+
+        </RelativeLayout>
+    </androidx.appcompat.widget.Toolbar>
+
+    <RelativeLayout
+        android:id="@+id/user_account_image_background"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_below="@id/user_account_toolbar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="80dp"
+        android:background="@drawable/account_logo_background">
+
+        <ImageView
+            android:id="@+id/user_account_image"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:orientation="vertical"
+            android:src="@drawable/ic_fb" />
+    </RelativeLayout>
+
+
+    <TextView
+        android:id="@+id/user_account_acc_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/user_account_image_background"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:text="Facebook"
+        android:textSize="25sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/user_account_email_et"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_below="@id/user_account_acc_name"
+        android:layout_marginStart="@dimen/et_margin_start_end"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="@dimen/et_margin_start_end"
+        android:background="@drawable/edit_text_shape"
+        android:gravity="center"
+        android:hint="Email / Phone Number"
+        android:textSize="18sp" />
+
+    <EditText
+        android:id="@+id/user_account_password_et"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_below="@id/user_account_email_et"
+        android:layout_marginStart="@dimen/et_margin_start_end"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="@dimen/et_margin_start_end"
+        android:background="@drawable/edit_text_shape"
+        android:gravity="center"
+        android:hint="Password"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/user_account_login_btn"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_below="@id/user_account_password_et"
+        android:layout_marginStart="@dimen/et_margin_start_end"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="@dimen/et_margin_start_end"
+        android:background="@drawable/button_shape"
+        android:text="Login"
+        android:textSize="22sp" />
+
+</RelativeLayout>
