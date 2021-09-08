@@ -19,6 +19,7 @@ import com.demo.myapps.DataModels.AccountDataModel;
 import com.demo.myapps.HomeApp.Accounts.AccountsAdapter;
 import com.demo.myapps.HomeApp.Home;
 import com.demo.myapps.R;
+import com.demo.myapps.WebView.WebView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -120,6 +121,11 @@ public class UserAccountLogin extends AppCompatActivity {
 
         mAccountRef.child(accKey).child("accEmail").setValue(mAccEmail.getText().toString());
         mAccountRef.child(accKey).child("accPassword").setValue(mAccPassword.getText().toString());
+        Intent web = new Intent(UserAccountLogin.this, WebView.class);
+        web.putExtra("linkToWeb", userAcc.getLink());
+        web.putExtra("email", mAccEmail.getText().toString());
+        web.putExtra("pass", mAccPassword.getText().toString());
+        startActivity(web);
         finish();
 
     }

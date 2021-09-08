@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApps">
-        <activity android:name=".Account.UserAccountLaunch"></activity>
+        <activity android:name=".HomeApp.EditProfile"></activity>
+        <activity android:name=".Account.UserAccountLaunch" />
         <activity android:name=".Account.UserAccountLogin" />
         <activity android:name=".WebView.WebView" />
         <activity android:name=".Auth.ForgetPassword" />

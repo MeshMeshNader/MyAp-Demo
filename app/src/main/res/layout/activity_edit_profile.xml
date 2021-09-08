@@ -3,58 +3,45 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Auth.Signup">
+    tools:context=".HomeApp.EditProfile">
 
-    <LinearLayout
-        android:id="@+id/signup_logo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp"
-        android:layout_marginBottom="25dp"
-        android:orientation="vertical">
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/edit_profile_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="53dp"
+        android:background="@color/blue">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:src="@drawable/ic_login_logo" />
-
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
+            android:layout_height="match_parent">
 
-            <TextView
+            <ImageView
+
+                android:layout_width="109dp"
+                android:layout_height="26dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/et_margin_start_end"
+                android:src="@drawable/ic_logo" />
+
+
+            <ImageView
+                android:id="@+id/edit_profile_back_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="My "
-                android:textAlignment="center"
-                android:textColor="@color/black"
-                android:textSize="25dp"
-                android:textStyle="bold|italic" />
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/et_margin_start_end"
+                android:src="@drawable/ic_back" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Apps"
-                android:textAlignment="center"
-                android:textColor="@color/blue"
-                android:textSize="25dp"
-                android:textStyle="italic|bold" />
-
-
-        </LinearLayout>
-
-
-    </LinearLayout>
-
+        </RelativeLayout>
+    </androidx.appcompat.widget.Toolbar>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/signup_logo"
+        android:layout_below="@id/edit_profile_toolbar"
+        android:layout_marginTop="50dp"
         android:orientation="vertical">
 
         <LinearLayout
@@ -64,7 +51,7 @@
             android:weightSum="2">
 
             <EditText
-                android:id="@+id/signup_first_name_et"
+                android:id="@+id/edit_first_name_et"
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
                 android:layout_marginStart="@dimen/et_margin_start_end"
@@ -76,7 +63,7 @@
                 android:textSize="18sp" />
 
             <EditText
-                android:id="@+id/signup_last_name_et"
+                android:id="@+id/edit_last_name_et"
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
                 android:layout_marginStart="@dimen/et_margin_vertical"
@@ -90,7 +77,7 @@
         </LinearLayout>
 
         <EditText
-            android:id="@+id/signup_email_et"
+            android:id="@+id/edit_email_et"
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:layout_marginStart="@dimen/et_margin_start_end"
@@ -102,7 +89,7 @@
             android:textSize="18sp" />
 
         <EditText
-            android:id="@+id/signup_phone_et"
+            android:id="@+id/edit_phone_et"
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:layout_marginStart="@dimen/et_margin_start_end"
@@ -115,7 +102,7 @@
             android:textSize="18sp" />
 
         <EditText
-            android:id="@+id/signup_national_id_et"
+            android:id="@+id/edit_national_id_et"
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:layout_marginStart="@dimen/et_margin_start_end"
@@ -128,7 +115,7 @@
             android:textSize="18sp" />
 
         <EditText
-            android:id="@+id/signup_password_et"
+            android:id="@+id/edit_old_password_et"
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:layout_marginStart="@dimen/et_margin_start_end"
@@ -136,11 +123,11 @@
             android:layout_marginEnd="@dimen/et_margin_start_end"
             android:background="@drawable/edit_text_shape"
             android:gravity="center"
-            android:hint="Password"
+            android:hint="Old Password"
             android:textSize="18sp" />
 
         <EditText
-            android:id="@+id/signup_confirm_password_et"
+            android:id="@+id/edit_new_password_et"
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:layout_marginStart="@dimen/et_margin_start_end"
@@ -148,36 +135,34 @@
             android:layout_marginEnd="@dimen/et_margin_start_end"
             android:background="@drawable/edit_text_shape"
             android:gravity="center"
-            android:hint="Confirm Password"
+            android:hint="New Password"
             android:textSize="18sp" />
 
-        <TextView
-            android:id="@+id/signup_already_have_acc"
+        <Button
+            android:id="@+id/edit_save_data_btn"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/login_password_et"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="23dp"
-            android:gravity="right"
-            android:text="Already have an Account ?"
-            android:textColor="@color/blue"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            android:layout_height="55dp"
+            android:layout_marginStart="@dimen/et_margin_start_end"
+            android:layout_marginEnd="@dimen/et_margin_start_end"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/button_shape"
+            android:text="Save"
+            android:textSize="22sp" />
+
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/signup_signup_btn"
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
+    <TextView
+        android:id="@+id/edit_log_out_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="LOGOUT"
+        android:textSize="22sp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginStart="@dimen/et_margin_start_end"
-        android:layout_marginEnd="@dimen/et_margin_start_end"
         android:layout_marginBottom="53dp"
-        android:background="@drawable/button_shape"
-        android:text="SIGN UP"
-        android:textSize="22sp" />
-
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        />
 
 </RelativeLayout>

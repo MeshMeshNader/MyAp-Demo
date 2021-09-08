@@ -2,6 +2,7 @@ package com.demo.myapps.HomeApp;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -14,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.demo.myapps.Auth.Login;
 import com.demo.myapps.DataModels.AccountDataModel;
 import com.demo.myapps.HomeApp.Accounts.AccountsAdapter;
 import com.demo.myapps.R;
@@ -179,6 +181,7 @@ public class Home extends AppCompatActivity implements View.OnClickListener {
                     recyclerView.setLayoutManager(layoutManager);
                     progressDialog.dismiss();
                 }
+                progressDialog.dismiss();
             }
 
             @Override
@@ -189,6 +192,8 @@ public class Home extends AppCompatActivity implements View.OnClickListener {
     }
 
 
+
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -196,7 +201,8 @@ public class Home extends AppCompatActivity implements View.OnClickListener {
                 showSelectAccountDialog();
                 break;
             case R.id.home_profile_btn:
-
+                Intent intent = new Intent(Home.this , EditProfile.class);
+                startActivity(intent);
                 break;
         }
     }

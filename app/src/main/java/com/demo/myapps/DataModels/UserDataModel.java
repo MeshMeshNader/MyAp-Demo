@@ -12,6 +12,9 @@ public class UserDataModel {
     String password;
     ArrayList<AccountDataModel> accounts;
 
+    public UserDataModel() {
+    }
+
     public UserDataModel(String userID, String firstName, String lastName, String email, String phoneNumber, String nationalID, String password) {
         UserID = userID;
         this.firstName = firstName;

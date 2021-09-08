@@ -1,6 +1,7 @@
 package com.demo.myapps.HomeApp.Accounts;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,25 +9,40 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.demo.myapps.Account.UserAccountLaunch;
 import com.demo.myapps.Account.UserAccountLogin;
 import com.demo.myapps.DataModels.AccountDataModel;
+import com.demo.myapps.HomeApp.Home;
 import com.demo.myapps.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
 public class AccountsAdapter extends RecyclerView.Adapter<AccountsAdapter.AccViewHolder> {
 
+    FirebaseAuth mAuth;
+    DatabaseReference UsersRef;
+    String currentUserID;
     ArrayList<AccountDataModel> mAccList;
     Context context;
 
     public AccountsAdapter(Context context, ArrayList<AccountDataModel> mAccList) {
         this.mAccList = mAccList;
         this.context = context;
+        mAuth = FirebaseAuth.getInstance();
+        currentUserID = mAuth.getCurrentUser().getUid();
+        UsersRef = FirebaseDatabase.getInstance().getReference("Users").child(currentUserID).child("Accounts");
     }
 
     @NonNull
@@ -64,6 +80,31 @@ public class AccountsAdapter extends RecyclerView.Adapter<AccountsAdapter.AccVie
                     }
                 }
 
+            }
+        });
+
+        holder.mAccBtn.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                new AlertDialog.Builder(context)
+                        .setMessage("Do you want to delete this account!")
+                        .setCancelable(false)
+                        .setPositiveButton("Yes!", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                UsersRef.child(mAccList.get(position).getAccId()).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        mAccList.remove(position);
+                                        notifyDataSetChanged();
+                                        Toast.makeText(context, "Account Deleted Successfully", Toast.LENGTH_LONG).show();
+                                    }
+                                });
+                            }
+                        })
+                        .setNegativeButton("No!", null)
+                        .show();
+
+                return false;
             }
         });
     }

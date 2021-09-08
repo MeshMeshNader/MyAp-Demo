@@ -27,12 +27,16 @@ import com.google.firebase.database.FirebaseDatabase;
 public class Signup extends AppCompatActivity implements View.OnClickListener {
 
 
+    //View
     Button mSignUp;
     EditText mFName, mLName, mEmail, mPhoneNumber, mNationalID, mPassword, mConfirmPassword;
     TextView mHaveAnAccount;
+
+    //Firebase
     FirebaseAuth mAuth;
-    FirebaseDatabase database;
     DatabaseReference UsersRef;
+
+    //ProgressBar
     CustomProgress mCustomProgress = CustomProgress.getInstance();
 
     @Override
@@ -60,8 +64,7 @@ public class Signup extends AppCompatActivity implements View.OnClickListener {
         mConfirmPassword = findViewById(R.id.signup_confirm_password_et);
         //Firebase
         mAuth = FirebaseAuth.getInstance();
-        database = FirebaseDatabase.getInstance();
-        UsersRef = database.getReference();
+        UsersRef = FirebaseDatabase.getInstance().getReference("Users");
     }
 
 
@@ -94,7 +97,7 @@ public class Signup extends AppCompatActivity implements View.OnClickListener {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            sendVerificationMessage();
+                            //sendVerificationMessage();
                             saveAccountData();
                         } else {
                             String message = task.getException().getMessage();
@@ -118,7 +121,7 @@ public class Signup extends AppCompatActivity implements View.OnClickListener {
         }
 
         String currentUserID = mAuth.getCurrentUser().getUid();
-        UsersRef = FirebaseDatabase.getInstance().getReference("Users");
+
         UserDataModel dataModel = new UserDataModel(currentUserID,
                 mFName.getText().toString(),
                 mLName.getText().toString(),
@@ -133,6 +136,10 @@ public class Signup extends AppCompatActivity implements View.OnClickListener {
                 if (task.isSuccessful()) {
                     Log.e("MyApps-Signup", "onComplete: data has beed saved successfully");
                     mCustomProgress.hideProgress();
+                    Toast.makeText(Signup.this, "Please Login to your account", Toast.LENGTH_LONG).show();
+                    startActivity(new Intent(Signup.this, Login.class));
+                    finish();
+                    mAuth.signOut();
                 } else {
                     String message = task.getException().getMessage();
                     Toast.makeText(Signup.this, "Error Occurred :" + message, Toast.LENGTH_LONG).show();
@@ -181,19 +188,24 @@ public class Signup extends AppCompatActivity implements View.OnClickListener {
         } else if (mPhoneNumber.getText().toString().isEmpty()) {
             Toast.makeText(this, "Enter your phone number", Toast.LENGTH_LONG).show();
             return false;
-        } else if (mPhoneNumber.getText().toString().length() < 11 || mPhoneNumber.getText().toString().length() > 11) {
-            Toast.makeText(this, "Enter valid phone number", Toast.LENGTH_LONG).show();
-            return false;
-        } else if (mNationalID.getText().toString().isEmpty()) {
+        }
+//        else if (mPhoneNumber.getText().toString().length() < 11 || mPhoneNumber.getText().toString().length() > 11) {
+//            Toast.makeText(this, "Enter valid phone number", Toast.LENGTH_LONG).show();
+//            return false;
+//        }
+        else if (mNationalID.getText().toString().isEmpty()) {
             Toast.makeText(this, "Enter youe national ID", Toast.LENGTH_LONG).show();
             return false;
-        } else if (mNationalID.getText().toString().length() < 14 || mNationalID.getText().toString().length() > 14) {
-            Toast.makeText(this, "Enter valid national ID", Toast.LENGTH_LONG).show();
-            return false;
-        } else if (mPassword.getText().toString().isEmpty()) {
+        }
+//        else if (mNationalID.getText().toString().length() < 14 || mNationalID.getText().toString().length() > 14) {
+//            Toast.makeText(this, "Enter valid national ID", Toast.LENGTH_LONG).show();
+//            return false;
+//        }
+        else if (mPassword.getText().toString().isEmpty()) {
             Toast.makeText(this, "Enter your password", Toast.LENGTH_LONG).show();
             return false;
-        } else if (mPassword.getText().toString().length() < 8) {
+        }
+        else if (mPassword.getText().toString().length() < 8) {
             mPassword.setError("Password < 8");
             Toast.makeText(this, "Your password cannot be less than 8 characters", Toast.LENGTH_LONG).show();
             return false;

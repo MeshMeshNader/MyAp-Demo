@@ -30,7 +30,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     //Firebase
     FirebaseAuth mAuth;
     private CustomProgress mCustomProgress = CustomProgress.getInstance();
-    private Boolean emailAddressChecker;
+    //private Boolean emailAddressChecker;
 
 
     @Override
@@ -109,19 +109,19 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     private void VerifyEmailAddress() {
         FirebaseUser firebaseUser = mAuth.getCurrentUser();
         firebaseUser.reload();
-        emailAddressChecker = firebaseUser.isEmailVerified();
-        if (emailAddressChecker) {
+        //emailAddressChecker = firebaseUser.isEmailVerified();
+       // if (emailAddressChecker) {
             mCustomProgress.hideProgress();
             Toast.makeText(Login.this, "Welcome to MyApps", Toast.LENGTH_LONG).show();
             Intent i = new Intent(Login.this, Home.class);
             startActivity(i);
             finish();
 
-        } else {
-            mCustomProgress.hideProgress();
-            Toast.makeText(this, "Please, confirm your account, check your email and try again.", Toast.LENGTH_LONG).show();
-            mAuth.signOut();
-        }
+     //   } else {
+//            mCustomProgress.hideProgress();
+//            Toast.makeText(this, "Please, confirm your account, check your email and try again.", Toast.LENGTH_LONG).show();
+//            mAuth.signOut();
+       // }
 
 
     }
