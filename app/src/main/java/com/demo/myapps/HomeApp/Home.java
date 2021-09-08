@@ -153,7 +153,7 @@ public class Home extends AppCompatActivity implements View.OnClickListener {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
-                            Toast.makeText(Home.this, "Account Added Successfully", Toast.LENGTH_LONG).show();
+                            Toast.makeText(Home.this, "Account Added Successfully", Toast.LENGTH_SHORT).show();
                         } else {
                             Log.e("TAG", "onComplete: " + task.getException().toString());
                         }

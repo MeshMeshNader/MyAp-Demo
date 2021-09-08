@@ -94,7 +94,6 @@ public class AccountsAdapter extends RecyclerView.Adapter<AccountsAdapter.AccVie
                                 UsersRef.child(mAccList.get(position).getAccId()).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
-                                        mAccList.remove(position);
                                         notifyDataSetChanged();
                                         Toast.makeText(context, "Account Deleted Successfully", Toast.LENGTH_LONG).show();
                                     }

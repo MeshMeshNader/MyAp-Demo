@@ -1,13 +1,8 @@
 package com.demo.myapps.HomeApp;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,6 +11,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.demo.myapps.Auth.Login;
 import com.demo.myapps.DataModels.UserDataModel;
@@ -100,7 +99,7 @@ public class EditProfile extends AppCompatActivity implements View.OnClickListen
         UsersRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()){
+                if (snapshot.exists()) {
                     userData = snapshot.getValue(UserDataModel.class);
                     mFName.setText(userData.getFirstName());
                     mLName.setText(userData.getLastName());
@@ -119,7 +118,7 @@ public class EditProfile extends AppCompatActivity implements View.OnClickListen
         });
     }
 
-    private void saveData(){
+    private void saveData() {
         final String newPassword = mNewPassword.getText().toString();
         String oldPassword = mOldPassword.getText().toString();
 
@@ -128,7 +127,7 @@ public class EditProfile extends AppCompatActivity implements View.OnClickListen
         mLoading.show();
         mLoading.setCanceledOnTouchOutside(true);
 
-      if (!(oldPassword.equals("")) && !(newPassword.equals(""))) {
+        if (!(oldPassword.equals("")) && !(newPassword.equals(""))) {
             final String email = user.getEmail();
             credential = EmailAuthProvider.getCredential(email, oldPassword);
 
@@ -141,29 +140,30 @@ public class EditProfile extends AppCompatActivity implements View.OnClickListen
 
                     } else {
                         String message = task.getException().toString();
-                        Toast.makeText(EditProfile.this, "Cannot change Password, The old password is incorrect" , Toast.LENGTH_LONG).show();
+                        Toast.makeText(EditProfile.this, "Cannot change Password, The old password is incorrect", Toast.LENGTH_LONG).show();
+                        mLoading.dismiss();
                         Log.e("EditProfile", "onComplete: Error Occurred On Changing Password " + message);
                     }
                 }
             });
+        } else {
+            UsersRef.child("firstName").setValue(mFName.getText().toString());
+            UsersRef.child("lastName").setValue(mLName.getText().toString());
+            UsersRef.child("nationalID").setValue(mNationalID.getText().toString());
+            UsersRef.child("phoneNumber").setValue(mPhoneNumber.getText().toString())
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                mLoading.dismiss();
+                                Toast.makeText(EditProfile.this, "Data Updated!!", Toast.LENGTH_SHORT).show();
+                                finish();
+                                Log.e("EditProfile", "onComplete: Done Saving Data !");
+                            } else
+                                Log.e("EditProfile", "onComplete: Error on Saving Data " + task.getException().toString());
+                        }
+                    });
         }
-
-
-        UsersRef.child("firstName").setValue(mFName.getText().toString());
-        UsersRef.child("lastName").setValue(mLName.getText().toString());
-        UsersRef.child("nationalID").setValue(mNationalID.getText().toString());
-        UsersRef.child("phoneNumber").setValue(mPhoneNumber.getText().toString())
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            mLoading.dismiss();
-                            Toast.makeText(EditProfile.this, "Data Updated!!", Toast.LENGTH_SHORT).show();
-                            Log.e("EditProfile", "onComplete: Done Saving Data !");
-                        } else
-                            Log.e("EditProfile", "onComplete: Error on Saving Data " + task.getException().toString());
-                    }
-                });
 
 
     }
@@ -186,6 +186,22 @@ public class EditProfile extends AppCompatActivity implements View.OnClickListen
                 if (task.isSuccessful()) {
                     UsersRef.child("password").setValue(finalPasswordEncrypted);
                     Toast.makeText(EditProfile.this, "Password Changed!!", Toast.LENGTH_SHORT).show();
+                    UsersRef.child("firstName").setValue(mFName.getText().toString());
+                    UsersRef.child("lastName").setValue(mLName.getText().toString());
+                    UsersRef.child("nationalID").setValue(mNationalID.getText().toString());
+                    UsersRef.child("phoneNumber").setValue(mPhoneNumber.getText().toString())
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                        mLoading.dismiss();
+                                        Toast.makeText(EditProfile.this, "Data Updated!!", Toast.LENGTH_SHORT).show();
+                                        finish();
+                                        Log.e("EditProfile", "onComplete: Done Saving Data !");
+                                    } else
+                                        Log.e("EditProfile", "onComplete: Error on Saving Data " + task.getException().toString());
+                                }
+                            });
                     Log.e("EditProfile", "onComplete: Change Password Successfully");
                 } else {
                     Log.e("EditProfile", "onComplete: Failed To change Password ");
@@ -207,7 +223,7 @@ public class EditProfile extends AppCompatActivity implements View.OnClickListen
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.edit_profile_back_btn:
                 finish();
                 break;
@@ -224,7 +240,19 @@ public class EditProfile extends AppCompatActivity implements View.OnClickListen
                         .show();
                 break;
             case R.id.edit_save_data_btn:
-                saveData();
+                if (!mOldPassword.getText().toString().isEmpty() && !mNewPassword.getText().toString().isEmpty()) {
+                    if (mOldPassword.getText().toString().length() < 8) {
+                        mOldPassword.setError("Password < 8");
+                        Toast.makeText(this, "Your password cannot be less than 8 characters", Toast.LENGTH_LONG).show();
+                    } else if (mNewPassword.getText().toString().length() < 8) {
+                        mNewPassword.setError("Password < 8");
+                        Toast.makeText(this, "Your password cannot be less than 8 characters", Toast.LENGTH_LONG).show();
+                    } else {
+                        saveData();
+                    }
+                } else {
+                    saveData();
+                }
                 break;
         }
     }
